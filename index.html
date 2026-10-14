@@ -122,7 +122,9 @@
     }
 
     footer .logo img {
-      height: 90px;
+      height: auto;
+      width: 100%;
+      max-width: 300px;
     }
 
     .nav-links {
@@ -540,6 +542,32 @@
 
     .cta .btn:hover {
       background: #ffd54a;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .cta-buttons .btn {
+      justify-content: flex-start;
+      font-size: 15px;
+      padding: 15px 24px;
+    }
+
+    .cta-buttons .btn small {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: .8;
+    }
+
+    .btn-icon {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
     }
 
     /* ===== RODAPÉ ===== */
@@ -1144,10 +1172,19 @@
           </p>
         </div>
 
-        <a href="#" class="btn whatsapp-link" target="_blank"
-           rel="noopener noreferrer">
-          Solicitar orçamento pelo WhatsApp ↗
-        </a>
+        <div class="cta-buttons">
+          <a href="#" class="btn whatsapp-link" data-whatsapp="0"
+             target="_blank" rel="noopener noreferrer">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+            <span><small>Chame no WhatsApp</small>(13) 99202-5544</span>
+          </a>
+
+          <a href="#" class="btn whatsapp-link" data-whatsapp="1"
+             target="_blank" rel="noopener noreferrer">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+            <span><small>Chame no WhatsApp</small>(13) 98192-2094</span>
+          </a>
+        </div>
 
       </div>
     </section>
@@ -1162,7 +1199,8 @@
 
         <div class="footer-about">
           <a href="#inicio" class="logo">
-            <img src="logo.png" alt="EDL Pintura - Pinturas em Geral">
+            <img src="logo_com_telefone.png"
+                 alt="EDL Pintura - Pinturas em Geral - WhatsApp (13) 99202-5544 e (13) 98192-2094">
           </a>
 
           <p>
@@ -1182,9 +1220,13 @@
         <div class="footer-column">
           <h3>Contato</h3>
           <p>Atendimento mediante agendamento</p>
-          <a href="#" class="whatsapp-link"
+          <a href="#" class="whatsapp-link" data-whatsapp="0"
              target="_blank" rel="noopener noreferrer">
-            WhatsApp: solicitar orçamento
+            WhatsApp: (13) 99202-5544
+          </a>
+          <a href="#" class="whatsapp-link" data-whatsapp="1"
+             target="_blank" rel="noopener noreferrer">
+            WhatsApp: (13) 98192-2094
           </a>
           <p>Área de atendimento: consulte disponibilidade</p>
         </div>
@@ -1224,10 +1266,10 @@
     // CONFIGURAÇÃO DO SITE
     // ======================================
 
-    // TROQUE PELO NÚMERO REAL DO WHATSAPP.
-    // Formato: código do país + DDD + número.
-    // Exemplo fictício: 5511999999999
-    const WHATSAPP_NUMBER = "5511999999999";
+    // NÚMEROS DO WHATSAPP (código do país + DDD + número).
+    // Links com data-whatsapp="1" usam o segundo número;
+    // os demais usam o primeiro.
+    const WHATSAPP_NUMBERS = ["5513992025544", "5513981922094"];
 
     const WHATSAPP_MESSAGE =
       "Olá! Vi o site da EDL Pintura e gostaria de solicitar um orçamento.";
@@ -1236,10 +1278,9 @@
     function configureWhatsApp() {
       const message = encodeURIComponent(WHATSAPP_MESSAGE);
 
-      const link = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-
       document.querySelectorAll(".whatsapp-link").forEach(element => {
-        element.href = link;
+        const number = WHATSAPP_NUMBERS[element.dataset.whatsapp || 0];
+        element.href = `https://wa.me/${number}?text=${message}`;
       });
     }
 
